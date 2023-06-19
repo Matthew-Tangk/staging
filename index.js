@@ -13,9 +13,11 @@ app
 
 app.listen(699);
 
+require("dotenv").config(); // Load environment variables from .env file
+
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const uri =
-  "mongodb+srv://matthewtangkilissan:<password>@cluster0.ky1og7f.mongodb.net/?retryWrites=true&w=majority";
+
+const uri = process.env.MONGODB_URI;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -28,7 +30,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+    // Connect the client to the server (optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
@@ -40,4 +42,5 @@ async function run() {
     await client.close();
   }
 }
+
 run().catch(console.dir);

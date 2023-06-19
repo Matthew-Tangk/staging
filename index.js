@@ -3,10 +3,15 @@ const express = require("express");
 const app = express();
 
 app
+  .use(express.json())
+  .post("/concertbuddies", (req, res) => {
+    const status = req.body.status;
+    saveStatusToMongoDB(status); // Call a function to save status to MongoDB
+    res.sendStatus(200);
+  })
   .get("/concertbuddies", (req, res) => {
     res.render("stage.ejs");
   })
-
   .use(express.static("static"))
   .set("view engine", "ejs")
   .set("views", "views");
@@ -30,15 +35,26 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server (optional starting in v4.7)
     await client.connect();
-    // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
   } finally {
-    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+
+async function saveStatusToMongoDB(status) {
+  try {
+    await client.connect();
+    const db = client.db("toggle_button"); // Replace "your-database-name" with the actual database name
+    const collection = db.collection("status_toggle_button"); // Replace "your-collection-name" with the actual collection name
+    await collection.insertOne({ status });
+    console.log("Status saved to MongoDB");
+  } catch (error) {
+    console.error("Error saving status to MongoDB:", error);
+  } finally {
     await client.close();
   }
 }

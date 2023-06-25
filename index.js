@@ -1,17 +1,20 @@
 console.log("Hello World!");
+
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
+
+app.get("/concertbuddies", (req, res) => {
+  res.render("stage.ejs");
+});
 
 app
-  .get("/concertbuddies", (req, res) => {
-    res.render("stage.ejs");
-  })
-
-  .use(express.static("static"))
   .set("view engine", "ejs")
-  .set("views", "views");
+  .set("views", "views")
+  .use(express.static("assets"))
+  .use(express.json());
 
-app.listen(699);
+app.use(bodyParser.json());
 
 require("dotenv").config(); // Load environment variables from .env file
 
@@ -27,19 +30,44 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
+
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+    // Connect the client to the server (optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
+
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-    console.log("Closed connection to MongoDB");
+  } catch (error) {
+    console.log("Error:", error);
   }
 }
+
 run().catch(console.dir);
+
+app.post("/updateStatus/:artist", async (req, res) => {
+  const artist = req.params.artist;
+  const status = req.body.status;
+
+  try {
+    await run(); // Connect to MongoDB before performing the update
+
+    const collection = client.db("toggle_button").collection("artists");
+    await collection.updateOne({ name: artist }, { $set: { status: status } });
+
+    console.log("Status updated:", artist, status);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log("Error:", error);
+    res.sendStatus(500);
+  } finally {
+    await client.close(); // Close the MongoDB connection
+  }
+});
+
+app.listen(699, () => {
+  console.log("Server is running on port 699");
+});

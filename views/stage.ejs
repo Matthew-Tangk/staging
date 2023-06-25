@@ -28,7 +28,7 @@
 
       <h2>June</h2>
 
-      <div class="ticket">
+      <div class="ticket" id="ticketSZA">
         <div class="date">
           <p>04</p>
         </div>
@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <div class="ticket">
+      <div class="ticket" id="ticketKENDRICK">
         <div class="date">
           <p>12</p>
         </div>
@@ -64,7 +64,7 @@
         </a>
       </div>
 
-      <div class="ticket">
+      <div class="ticket" id="ticketDOJA">
         <div class="date">
           <p>21</p>
         </div>
@@ -83,7 +83,7 @@
 
       <h2>August</h2>
 
-      <div class="ticket">
+      <div class="ticket" id="ticketDRAKE">
         <div class="date">
           <p>14</p>
         </div>
@@ -100,19 +100,7 @@
         </div>
       </div>
     </main>
-    <footer>
-      <div class="footer-container">
-        <a href="index.html"
-          ><img src="../assets/images/calendar_icon.png" alt="calendar_icon"
-        /></a>
-        <a href="stage.html"
-          ><img src="../assets/images/myevents_icon.png" alt="my_events"
-        /></a>
-        <a href="profile.html"
-          ><img src="../assets/images/inbox_icon.png" alt="inbox"
-        /></a>
-      </div>
-    </footer>
+    <%- include('partials/footer.ejs') %>
     <style>
       /* CSS */
       styles {
@@ -158,23 +146,23 @@
       /* container for the tickets */
       .ticket {
         background-color: #322f54;
-        width: 100%;
-        border-radius: 25px;
-        background-image: url(../assets/images/sos_cover.jpeg);
+
+        border-radius: 1.5625em;
+
         background-size: cover;
         background-position: left;
         background-repeat: no-repeat;
         background-size: 40% 100%;
-        padding: 5px 0;
-        margin: 30px 0;
+        padding: 0.3125em 0;
+        margin: 1.875em 0;
       }
 
       .eventDetails {
         display: flex;
         flex-direction: column;
-        font-size: 14px;
+        font-size: 0.875em;
         color: white;
-        margin: 5px 0 5px 43%;
+        margin: 0.3125em 0 0.3125em 43%;
       }
 
       .eventDetails p {
@@ -183,7 +171,7 @@
       }
 
       .eventDetails p:first-of-type {
-        margin-bottom: 20px;
+        margin-bottom: 1.25em;
         font-weight: lighter;
       }
 
@@ -218,8 +206,8 @@
       .toggle-button {
         display: inline-block;
         position: relative;
-        width: 60px;
-        height: 34px;
+        width: 3.75em;
+        height: 2.125em;
         margin-left: 60%;
       }
 
@@ -229,7 +217,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        border-radius: 17px;
+        border-radius: 1.0625em;
         background-color: #6862c8;
         transition: 0.4s;
       }
@@ -237,10 +225,10 @@
       .slider:before {
         position: absolute;
         content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
+        height: 1.625em;
+        width: 1.625em;
+        left: 0.25em;
+        bottom: 0.25em;
         border-radius: 50%;
         background-color: #da6864;
         transition: 0.4s;
@@ -251,50 +239,52 @@
       }
 
       .toggle:checked + .slider:before {
-        transform: translateX(26px);
+        transform: translateX(1.625em);
         background-color: #64ff88;
       }
 
+      .ticket:first-of-type {
+        background-image: url(images/sos_cover.jpg);
+      }
+
       .ticket:nth-of-type(2) {
-        background-image: url(../static/img/events/MMATBS_cover.jpeg);
+        background-image: url(images/MMATBS_cover.jpeg);
       }
 
       .ticket:nth-of-type(3) {
-        background-image: url(../static/img/events/planetHer_cover.jpeg);
+        background-image: url(images/planetHer_cover.jpeg);
       }
 
       .ticket:nth-of-type(4) {
-        background-image: url(../static/img/events/drake_cover.jpeg);
+        background-image: url(images/drake_cover.jpeg);
       }
 
       .main-container {
-        min-height: calc(100vh - 50px);
-        padding-bottom: 50px;
+        min-height: calc(100vh - 3.125em);
+        padding-bottom: 3.125em;
       }
 
       footer {
-        bottom: 0;
-        width: 100%;
-        height: 50px;
+        height: 3.125em;
       }
 
-      footer a {
-        text-decoration: none;
-        color: white;
-      }
-
-      footer a img {
-        width: 60px;
-        height: 60px;
-      }
-
-      .footer-container {
+      footer ul {
         display: flex;
         justify-content: space-around;
         align-items: center;
-        height: 100px;
+        height: 6.25em;
+        padding-left: 0;
 
         background-color: #2b2936;
+      }
+
+      footer li {
+        list-style: none;
+      }
+
+      footer img {
+        width: 3.75em;
+        height: 3.75em;
       }
 
       .page2 header {
@@ -302,32 +292,32 @@
       }
 
       #spread {
-        background-image: url(./static/img/events/mmatbs_spread.webp);
+        background-image: url(images/mmatbs_spread.webp);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        padding: 10px;
-        box-shadow: 0px 5px 5px #322f54;
-        height: 180px;
-        border-radius: 25px;
+        padding: 0.625em;
+        box-shadow: 0 0.3125em 0.3125em #322f54;
+        height: 11.25em;
+        border-radius: 1.5625em;
         width: 90%;
-        margin: 10px;
-        border-radius: 25px;
+        margin: 0.625em;
+        border-radius: 1.5625em;
       }
 
       .page2 h2:first-of-type {
-        margin-left: 15px;
+        margin-left: 0.9375em;
       }
 
       .page2 p {
         color: #ffffff;
-        font-size: 14px;
-        margin: 14px 0 0 15px;
+        font-size: 0.875em;
+        margin: 0.875em 0 0 0.9375em;
       }
 
       .page2 h2 {
         color: #ffffff;
-        margin: 14px 0;
+        margin: 0.875em 0;
         display: flex;
         justify-content: center;
       }
@@ -337,22 +327,22 @@
         justify-content: center;
         background-color: #322f54;
         width: 40%;
-        border-radius: 25px;
+        border-radius: 1.5625em;
       }
 
       .attending p {
         color: #ffffff;
-        font-size: 14px;
-        height: 50px;
-        margin: 25px 0 0 0;
+        font-size: 0.875em;
+        height: 3.125em;
+        margin: 1.5625em 0 0 0;
       }
 
       #closingstatement {
         display: flex;
         justify-content: space-around;
-        margin-bottom: 10px;
+        margin-bottom: 0.625em;
       }
     </style>
-    <script src="../assets/js/client.js"></script>
+    <script src="../js/client.js"></script>
   </body>
 </html>
